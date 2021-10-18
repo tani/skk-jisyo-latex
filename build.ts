@@ -22,4 +22,4 @@ for (const [_, character, latex, unicodeMath] of dat) {
     dic += `${unicodeMath.slice(1)} /${character}/` + "\n";
   }
 }
-await Deno.writeTextFile("./SKK_JISYO.latex.utf8", dic);
+await Deno.writeTextFile("./SKK-JISYO.latex.utf8", dic);
