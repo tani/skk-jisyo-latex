@@ -12,14 +12,13 @@ let dic = `;; LaTeX Symbol Dictionary
 ;; okuri-ari entries.
 ;; okuri-nasi entries.
 `;
-for (const [_, character, latex, unicodeMath] of dat) {
-  if (!latex || !unicodeMath) continue;
-  if (latex.match(/[^a-zA-Z\\]/) || unicodeMath.match(/[^a-zA-Z\\]/)) continue;
-  if (latex[0] !== "\\" || unicodeMath[0] !== "\\") continue;
-
-  dic += `${latex.slice(1)} /${character}/` + "\n";
-  if (latex !== unicodeMath) {
-    dic += `${unicodeMath.slice(1)} /${character}/` + "\n";
+for (const [_, character, latex, uniMath] of dat) {
+  if (latex && !latex.match(/[^a-zA-Z\\]/) && latex[0] === "\\") {
+    dic += `${latex.slice(1)} /${character}/` + "\n";
+  }
+  if (latex === uniMath) continue;
+  if (uniMath && !uniMath.match(/[^a-zA-Z\\]/) && uniMath[0] === "\\") {
+    dic += `${uniMath.slice(1)} /${character}/` + "\n";
   }
 }
 await Deno.writeTextFile("./SKK-JISYO.latex.utf8", dic);
